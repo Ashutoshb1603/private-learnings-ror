@@ -1,0 +1,23 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= semantic_form_for [:admin, @skin_story], url: @skin_story.persisted? ? admin_skin_story_path(@skin_story) : admin_skin_stories_path, builder: ActiveAdmin::FormBuilder do |f| %>
+    <%= f.inputs do %>
+        <%= f.input :client_name %>
+    <% end %>
+  <%= f.inputs do %>
+    <%= f.input :age %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :concern %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :before_image, as: :file %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :after_image, as: :file %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.label "description*", class: 'form_label' %>
+    <%= f.cktext_area :description %>
+  <% end %>
+  <%= f.actions %>
+<% end %> 

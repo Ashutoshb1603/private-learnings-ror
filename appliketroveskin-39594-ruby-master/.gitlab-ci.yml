@@ -1,0 +1,5 @@
+
+include:
+  - project: 'public-tools/deploy-templates'
+    ref: master
+    file: '/app/.gitlab-ci-main.yml'

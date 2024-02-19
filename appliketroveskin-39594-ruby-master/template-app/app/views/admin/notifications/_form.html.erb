@@ -1,0 +1,20 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= semantic_form_for [:admin, @notification || @resource], url: admin_notifications_path, builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :headings %>
+  <% end %>
+  <%= f.inputs do %>
+    <li class="string input required stringish">
+    <%= f.label "User Type", class: 'label'  %>
+    <%= select_tag :user_type, options_for_select([["All Users", "all"], ["Elite Users", "elite"], ["Glow Getter", "glow_getter"], ["Free Customers", "free"], ["Therapists", "therapists"], ["Select Customers", "select_customers"]]), id: 'notification_user_type' %>
+    </li>
+    <li class="string input required stringish notification_account_ids">
+      <%= f.label "Accounts*", class: 'label'  %>
+      <%= select_tag "account_ids[]", options_from_collection_for_select(AccountBlock::Account.active, "id", "name", params[:account_ids]), multiple: true, id: 'account_ids' %>
+    </li>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :contents %>
+  <% end %>
+  <%= f.actions %>
+<% end %> 

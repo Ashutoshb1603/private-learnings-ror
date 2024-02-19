@@ -1,0 +1,19 @@
+module BxBlockBlogpostsmanagement
+  class ApplicationController < BuilderBase::ApplicationController
+    include BuilderJsonWebToken::JsonWebTokenValidation
+
+    before_action :validate_json_web_token
+    before_action :is_freezed
+    rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+
+    private
+
+    def shopify_blogs
+      @@shopify = BxBlockShopifyintegration::ShopifyBlogsController.new(params)
+    end
+
+    def not_found
+      render :json => {'errors' => {"message" =>'Record not found'}}, :status => :not_found
+    end
+  end
+end

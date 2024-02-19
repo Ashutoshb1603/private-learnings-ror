@@ -1,0 +1,165 @@
+# Default values for app-deploy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+# For Custom CNAME configuration refer docs first: https://builderai.quip.com/S1SiA9110Eph/Using-Custom-CNAME
+
+replicaCount: 2
+
+budget:
+  minAvailable: 1
+
+# Specify additional values that will be presented as environment variables to the pod.
+appExtConfig:
+  SMTP_ADDRESS: "smtp-mail.outlook.com"
+  SMTP_PORT: "587"
+  SMTP_USERNAME: "app@monicatolan.com"
+  SMTP_PASS: "Trl123!!"
+  RAILS_ENV: "production"
+  RAILS_LOG_TO_STDOUT: "true"
+  REDIS_URL : "redis://redis-master.redis.svc.cluster.local"
+  RAILS_MAX_THREADS: "30"
+  SHOPIFY_HOSTNAME : "monica-tolan"
+  SHOPIFY_ACCESS_TOKEN : "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"
+  SHOPIFY_HOSTNAME_UK : "monica-tolan-uk"
+  SHOPIFY_ACCESS_TOKEN_UK : "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"
+  TEST_ENV: "false"
+  KLAVIYO_API_KEY : "pk_d536173d8263052f333ec8ea6f658e7dfd"
+  ACUITY_AUTH_KEY: "Basic MTY4OTA2NDg6MDc5OTY2ZGE1NDA3NDM5Y2E5M2M5N2ZjMWMwYTk2NzY="
+  BASE_URL: "https://appliketroveskin-39594-ruby.b39594.prod.eu-west-1.aws.svc.builder.ai/"
+  FIREBASE_SERVER_KEY: "AAAAJO1hl-o:APA91bELZgQY1CLfWlixFIDDcpk7bf5M5-ua0EIn1LCJkaLZoIWdpjNqjRbFWiEr6daMnikBTkJ-d1tBd1PEXpWJXK22NZ9Mli0bsLChXPpipKcHc_27tx8Wq6mpuiIY9CSDURX_njG-"
+  TWILIO_SID: "AC80c5ca5312c0eebbcd7a6f9f62b76ce8"
+  TWILIO_API_KEY: "SKacaf01c496d2a48c481116543113bae8"
+  TWILIO_API_SECRET: "UYqZmdaC2TPaWUnD4V0bPTpjA9oucQqY"
+  TWILIO_AUTH_TOKEN: "a08c5f2ff5fbf2d5795b7ece21c7a5e2"
+  TWILIO_AUTH_KEY: "Basic U0szZDNjZjExYTFmNWEyZGZkZmEzMTc2ODlkMTg5ZmVlNTp3ZW0ydkx6b0lTMHBXeVh6WkZwWURPN0tjR2VOVG5yaA=="
+  STRIPE_PUBLISHABLE_KEY: "pk_live_KsxgZuaqhEfBHPIEQFX0cpKs00pXr1MZMt"
+  STRIPE_SECRET_KEY: "sk_live_xrHwN939Gg0hvBlXBq4k0IMc00CJtN6Xmp"
+  PAYPAL_CLIENT_ID: "AYO0MO1EWwg55Hm-TQnQvOWFXJxPPpw3b60y2spXoQ1z_EyLqbXpEpkY4CFnfc4E0xnpQJMXb82PFbGn"
+  PAYPAL_SECRET_KEY: "EMDz1v67hQ35eEf8b_UxxU8_2miy1SAfN9Z6l_Oxcu0n2nq8LtfEa1Ksee6qiBx2Md4wjHGfHDGocQIL"
+  PAYPAL_API_URL: "https://api.paypal.com"
+  CURRENCY_API_KEY: "dba0196a03429b3ca796675e228db3ac04605a1f"
+  STRIPE_WEBHOOK_ID: "whsec_uclhC9TbaKlKaj3EYhoPUjEYRutIsknv"
+  PAYPAL_WEBHOOK_ID: "4D1216714M662714F"
+  MODE: "live"
+
+image:
+  repository:  gitlab.builder.ai:5000/template-app
+  pullPolicy: IfNotPresent
+  tag: 8.8.8
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+railsMigration:
+  enabled: true
+  timeout: 300
+  retry: 2
+
+railsSidekiq:
+  enabled: true
+  replicaCount: 1
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '3000'
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+# Experimental - ONLY to be used in lab environments
+# Enable the kubernetes horizontal pod autoscaler for this application
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  # maxReplicas must not exceed the max node count
+  maxReplicas: 2
+  targetCPU: 50
+  targetMemory: 80 
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+annotations:
+  prometheus.io/scrape: 'true'
+  prometheus.io/port: '3000'
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/server-alias: "admin.skindeepapp.com"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: rrapp.local
+      paths: ['/']
+  tls:
+    - secretName: https-cert
+      hosts:
+        - rrapp.local
+        - admin.skindeepapp.com
+        - admin.skindeepapp.com
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 800m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 200m
+  #   memory: 196Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: "app.kubernetes.io/name"
+                  operator: In
+                  values:
+                  - app-deploy
+            topologyKey: "kubernetes.io/hostname"
+
+
+affinitySidekiq:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: "app.kubernetes.io/name"
+                  operator: In
+                  values:
+                  - app-deploySidekiq
+            topologyKey: "kubernetes.io/hostname"

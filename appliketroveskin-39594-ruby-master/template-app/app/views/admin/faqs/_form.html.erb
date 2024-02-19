@@ -1,0 +1,11 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= semantic_form_for [:admin, @faq], url: @faq.persisted? ? admin_faq_path(@faq) : admin_faqs_path, builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :question %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.label "Answer*", class: 'form_label' %>
+    <%= f.cktext_area :answer %>
+  <% end %>
+  <%= f.actions %>
+<% end %> 

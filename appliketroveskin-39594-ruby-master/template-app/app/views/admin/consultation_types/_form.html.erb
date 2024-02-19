@@ -1,0 +1,14 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= semantic_form_for [:admin, @consultation_type], url: @consultation_type.persisted? ? admin_consultation_type_path(@consultation_type) : admin_consultation_types_path, builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :price %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.label "Description*", class: 'form_label' %>
+    <%= f.cktext_area :description %>
+  <% end %>
+  <%= f.actions %>
+<% end %> 

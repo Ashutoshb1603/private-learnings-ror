@@ -1,0 +1,10 @@
+<div>
+    <%= form_tag refund_admin_users_path(id: user.id), method: :put do %>
+        <div class="refund">
+            <%= hidden_field_tag :user_id, user.id %>
+            <%= hidden_field_tag :payment_id, payment.id %>
+            <%= text_field_tag :refund_amount, 0, :input_html => {class: 'form-control', minimun: 1, maximum: user&.wallet&.balance.to_i} %>
+            <%= submit_tag "Refund", class: "form-control btn btn-primary" %>
+        </div>
+    <% end %>
+</div>

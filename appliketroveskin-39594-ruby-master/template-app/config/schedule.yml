@@ -1,0 +1,59 @@
+daily_payments:
+  cron: "30 11 * * *"
+  class: "BxBlockPayments::DailyPaymentWorker"
+
+weekly_payments:
+  cron: "0 9 * * *"
+  class: "BxBlockPayments::WeeklyPaymentWorker"
+
+monthly_payments:
+  cron: "0 9 1 * *"
+  class: "BxBlockPayments::MonthlyPaymentWorker"
+
+abandoned_cart_notification:
+  cron: "0 * * * *"
+  class: "BxBlockNotifications::AbandonedCartNotificationWorker"
+
+scheduled_notification:
+  cron: "*/15 * * * *"
+  class: "BxBlockNotifications::ScheduledNotificationWorker"
+
+live_notify:
+  cron: "*/15 * * * *"
+  class: "BxBlockNotifications::LiveNotifyWorker"
+
+membership_expiring_soon:
+  cron: "0 12 * * *"
+  class: "BxBlockNotifications::MembershipExpiringSoonNotifyWorker"
+
+klaviyo:
+  cron: "0 1 * * *"
+  class: "BxBlockKlaviyointegration::KlaviyoListWorker"
+
+appointment_reminder:
+  cron: "0 11 * * *"
+  class: "BxBlockNotifications::AppointmentNotificationWorker"
+
+skin_log:
+  cron: "0 20 * * *"
+  class: "BxBlockNotifications::SkinLogWorker"
+
+skin_hub:
+  cron: "0 9 * * *"
+  class: "BxBlockNotifications::SkinHubNotificationWorker"
+
+blogs:
+  cron: "0 * * * *"
+  class: "BxBlockContentmanagement::BlogsWorker"
+
+wallet: 
+  cron: "0 11 * * *"
+  class: "BxBlockPayments::WalletSavingsWorker"
+
+empty_cart:
+  cron: "0 0 * * *"
+  class: "BxBlockShoppingCart::CartItemWorker"
+
+reload_products:
+  cron: "0 0 * * *"
+  class: "BxBlockCatalogue::ShopifyProductsWorker"

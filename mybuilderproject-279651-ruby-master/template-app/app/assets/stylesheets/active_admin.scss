@@ -1,0 +1,48 @@
+@import "arctic_admin/base";
+@import "active_admin/mixins";
+@import 'activeadmin/quill_editor/quill.snow';
+@import 'activeadmin/quill_editor_input';
+
+
+
+#collection_selection .index_as_table{
+  position: relative;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+
+.header #utility_nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 50px;
+  width: calc(141% - 160px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  text-align: right;
+  background-color: #fff;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.green_icon{
+  background-color: #4cd137;    
+  right: 30px;
+  bottom: 10px;
+  height: 20px;
+  width: 20px;
+  border:5px solid white;
+  border-radius: 50%;
+} 
+
+.red_icon{
+  background-color: #ff0000;     
+  right: 30px;
+  bottom: 10px;
+  height: 20px;
+  width: 20px;
+  border:5px solid white;
+  border-radius: 50%;
+}      

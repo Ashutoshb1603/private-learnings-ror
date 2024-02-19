@@ -1,0 +1,2 @@
+class SkincareStepNote < ApplicationRecord
+end

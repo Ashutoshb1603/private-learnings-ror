@@ -1,0 +1,14 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= semantic_form_for [:admin, @explanation_text], :url => { :action => :update }, builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :section_name %>
+  <% end %>
+  <%= f.inputs do %>
+    <%= f.input :area_name %>
+  <% end %>  
+  <%= f.inputs do %>
+    <%= f.label "Value*", class: 'form_label'  %>
+    <%= f.cktext_area :value %>
+  <% end %>
+  <%= f.actions %>
+<% end %> 

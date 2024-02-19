@@ -1,0 +1,9 @@
+<div>
+    <%= form_tag add_money_admin_users_path(id: user.id), method: :put do %>
+        <div class="refund">
+            <%= hidden_field_tag :user_id, user.id %>
+            <%= text_field_tag :added_amount, 0, :input_html => {class: 'form-control', minimun: 1, maximum: 500} %>
+            <%= submit_tag "AddMoney", class: "form-control btn btn-primary" %>
+        </div>
+    <% end %>
+</div>
